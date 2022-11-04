@@ -1,0 +1,30 @@
+name: First Workflow
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  first:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-22.04]
+    runs-on: matrix.os
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Commands
+        run: |
+          echo "JOB context: ${{ toJSON(job) }}"
+          echo "GITHUB context: ${{ toJSON(github) }}"
+          echo "STEPS context: ${{ toJSON(steps) }}"
+          echo "MATRIX context: ${{ toJSON(matrix) }}"
+          echo "RUNNER context: ${{ toJSON(runner) }}"
+          echo "STRATEGY context: ${{ toJSON(strategy) }}"
